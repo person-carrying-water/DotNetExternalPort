@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="../General/General/General.shproj" />
+  <Project Path="ExternalPort/ExternalPort.csproj" />
+  <Project Path="ExternalPortTest/ExternalPortTest.csproj" />
+</Solution>
