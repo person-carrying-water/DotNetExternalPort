@@ -135,22 +135,28 @@ namespace ExternalPort
             _serialPort.BreakState = false;
         }
 
-        public string Send(string cmd)
+        public void Send(string cmd)
         {
             _serialPort.Write(cmd);
         }
 
-        public async Task<string> SendAsync(string cmd)
+        public async Task SendAsync(string cmd)
         {
             throw new NotImplementedException();
         }
 
-        public string Receive()
+        public byte[] Receive()
         {
-            throw new NotImplementedException();
+            while(_serialPort.BytesToRead == 0)
+            {
+            }
+            byte[] buffer = new byte[_serialPort.BytesToRead];
+            int bytesread= _serialPort.Read(buffer, 0, buffer.Length);
+
+            return buffer;
         }
 
-        public async Task<string> ReciveAsync()
+        public async Task<byte[]> ReciveAsync()
         {
             throw new NotImplementedException();
         }

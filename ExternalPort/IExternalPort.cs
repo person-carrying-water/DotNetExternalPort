@@ -24,13 +24,13 @@ namespace ExternalPort
 
         void Close();
 
-        string Send(string cmd);
+        void Send(string cmd);
 
-        Task<string> SendAsync(string cmd);
+        Task SendAsync(string cmd);
 
-        string Receive();
+        byte[] Receive();
 
-        Task<string> ReciveAsync();
+        Task<byte[]> ReciveAsync();
         #endregion
     }
 }

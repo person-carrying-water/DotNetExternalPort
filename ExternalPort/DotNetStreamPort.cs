@@ -78,19 +78,27 @@ namespace ExternalPort
 
 
 
-        public string Send(string cmd)
+        public void Send(string cmd)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<string> SendAsync(string cmd)
+        public async Task SendAsync(string cmd)
         {
             throw new NotImplementedException();
         }
 
-        public string Receive()
+        public byte[] Receive()
         {
-            string res = "";
+            while(_tcpSock.Available == 0)
+            {
+            }
+            byte[] buffer = new byte[_tcpSock.Available];
+            int bytesRead = _netStm.Read(buffer, 0, buffer.Length);
+
+            return buffer;
+
+            /*string res = "";
             var encode = Encoding.UTF8;
 
             using (var bs = new BufferedStream(_netStm))
@@ -99,10 +107,10 @@ namespace ExternalPort
                 res = sr.ReadToEnd();
             }
 
-            return res;
+            return res;*/
         }
 
-        public async Task<string> ReciveAsync()
+        public async Task<byte[]> ReciveAsync()
         {
             throw new NotImplementedException();
         }

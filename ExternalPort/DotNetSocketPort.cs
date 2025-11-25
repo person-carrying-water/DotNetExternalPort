@@ -41,28 +41,34 @@ namespace ExternalPort
             throw new NotImplementedException();
         }
 
-        public string Receive()
+        public byte[] Receive()
         {
-            var buf = new byte[1024]; //この値もどこかで設定できるようにする
+            while(client.Available == 0)
+            {
+            }
+            byte[] buffer = new byte[client.Available];
+            int bytesRead = client.Receive(buffer);
+
+            return buffer;
+
+            /*var buf = new byte[1024]; //この値もどこかで設定できるようにする
             var len = client.Receive(buf);
 
-            return Encoding.UTF8.GetString(buf, 0, len);
+            return Encoding.UTF8.GetString(buf, 0, len);*/
         }
 
-        public Task<string> ReciveAsync()
+        public Task<byte[]> ReciveAsync()
         {
             throw new NotImplementedException();
         }
 
-        public string Send(string cmd) //stringではなくintにすること
+        public void Send(string cmd) //stringではなくintにすること
         {
             var bytes = Encoding.UTF8.GetBytes(cmd);
             var len = client.Send(bytes);
-
-            return "";
         }
 
-        public Task<string> SendAsync(string cmd)
+        public Task SendAsync(string cmd)
         {
             throw new NotImplementedException();
         }
