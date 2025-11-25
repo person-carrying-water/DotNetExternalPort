@@ -23,9 +23,11 @@ namespace ExternalPort
         Task<bool> ConnectAsync();
 
         void Close();
+
         string Send(string cmd);
 
         Task<string> SendAsync(string cmd);
+
         string Receive();
 
         Task<string> ReciveAsync();

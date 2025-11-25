@@ -137,7 +137,7 @@ namespace ExternalPort
 
         public string Send(string cmd)
         {
-            throw new NotImplementedException();
+            _serialPort.Write(cmd);
         }
 
         public async Task<string> SendAsync(string cmd)
@@ -154,6 +154,75 @@ namespace ExternalPort
         {
             throw new NotImplementedException();
         }
+
+        /*Public Function Read() As String
+
+        Dim UEncode As System.Text.Encoding
+        UEncode = System.Text.Encoding.ASCII
+        Dim ReadStr As String = ""
+        Dim BufferStr As String = ""
+        Dim ReadBuffer As Byte()
+        Dim rsw As New System.Diagnostics.Stopwatch
+
+        rsw.Reset()
+        rsw.Start()
+        '受信バッファ内にCR,LFなどが入るまで繰り返し読み込む
+        Do
+            'System.Windows.Forms.Application.DoEvents()
+            'Dim ReadLength As Integer = SerialPort.Read(ReadBuffer, 0, ReadBuffer.GetLength(0))
+            'Dim BufferStr As String = System.Text.Encoding.GetEncoding("ASCII").GetString(ReadBuffer, 0, ReadLength)
+            If SerialPort.BytesToRead > 0 Then
+                BufferStr = ""
+                '読取
+                '受信文字数による配列の確保
+                ReadBuffer = New Byte(SerialPort.BytesToRead - 1) {}
+                SerialPort.Read(ReadBuffer, 0, ReadBuffer.GetLength(0))
+                BufferStr = UEncode.GetString(ReadBuffer)   'System.Text.Encoding.GetEncoding("Shift-JIS").GetString(ReceiveBuffer)
+                ReadStr = ReadStr & BufferStr
+            End If
+        Loop Until InStr(ReadStr, Me.ReadTerminate) Or InStr(ReadStr, ",") Or rsw.ElapsedMilliseconds > 100
+        rsw.Stop()
+
+        If rsw.ElapsedMilliseconds > 100 Then
+            'タイムアウトログ
+            ReadStr = "E11"
+        Else
+            'キャリッジリターンの除去
+            ReadStr = ReadStr.Replace(Me.ReadTerminate, "")
+            ReadStr = ReadStr.Replace(",", "")
+        End If
+
+        Return ReadStr
+
+    End Function
+
+    ''' <summary>
+    ''' コマンドを送信しReadメソッドを実行し受信バッファの内容を返します。
+    ''' </summary>
+    ''' <param name="SendCommand"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Function Write(ByVal Readyn As Boolean, ByVal SendCommand As String) As String
+
+        If SerialPort.BytesToRead > 0 Then
+            DiscardInBuffer()
+            MakerCom.PlcErrCheck("E10", Maker, "")
+        End If
+
+        Try
+            SerialPort.Write(SendCommand & Me.WriteTerminate)
+        Catch ex As TimeoutException
+            'Writeタイムアウト
+            Return "E8"
+        End Try
+
+        If Readyn = True Then
+            Return Read()
+        Else
+            Return ""
+        End If
+
+    End Function*/
         #endregion
 
         #region "プロパティ"

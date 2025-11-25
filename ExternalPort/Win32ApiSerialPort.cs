@@ -362,20 +362,21 @@ namespace ExternalPort
         }
 
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.Synchronized)]
-        public string Receive(string str)
+        public string Receive()
         {
             uint BytesWritten, BytesRead = 0;
             BytesWritten = 1024;
-            //byte Buffer[1024];
+            byte[] Buffer = new byte[BytesWritten];
+            string str;
 
-            /*if(Receive != IWin32ApiFile.ReadFile(hSerialPort, Buffer, BytesWritten, out BytesRead, IntPtr.Zero))
+            if(IWin32ApiFile.ReadFile(hSerialPort, Buffer, BytesWritten, out BytesRead, IntPtr.Zero))
             {
-                //str = oEnc.GetString(Buffer);
+                str = oEnc.GetString(Buffer);
             }
             else
             {
                 str = "";
-            }*/
+            }
 
             return str;
         }

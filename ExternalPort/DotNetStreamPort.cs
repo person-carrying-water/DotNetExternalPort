@@ -106,7 +106,88 @@ namespace ExternalPort
         {
             throw new NotImplementedException();
         }
-        #endregion
+
+        /*Public Function TcpReceive() As String
+
+        ReadStr = ""
+        Dim UEncode As System.Text.Encoding
+        UEncode = System.Text.Encoding.UTF8
+        Dim ReceiveBuffer As Byte()
+        Dim oks As Boolean = False
+        Dim rsw As New System.Diagnostics.Stopwatch
+
+        rsw.Reset()
+        rsw.Start()
+        Do
+            If TcpSock.Available > 0 Then
+                '受信文字数による配列の確保
+                ReceiveBuffer = New Byte(TcpSock.Available - 1) {}
+                '読取
+                NetStm.Read(ReceiveBuffer, 0, ReceiveBuffer.GetLength(0))
+                '受信したByteをUTF-8で文字列に置き換え
+                ReadStr = UEncode.GetString(ReceiveBuffer) 'System.Text.Encoding.GetEncoding("Shift-JIS").GetString(ReceiveBuffer)
+                oks = True
+            End If
+        Loop Until oks = True Or rsw.ElapsedMilliseconds > Me.receivetimeout
+        rsw.Stop()
+
+        '受信タイムアウト
+        If rsw.ElapsedMilliseconds > Me.ReceiveTimeout Then
+            ReadStr = "E11"
+        Else
+            'キャリッジリターンの除去
+            ReadStr = Replace(ReadStr, ReceiveTerminate, "")
+            ReadStr = Replace(ReadStr, ",", "")
+        End If
+
+        Return ReadStr
+
+    End Function
+
+    ''' <summary>
+    ''' コマンドを送信しTcpReceiveメソッドを実行し受信バッファの内容を返します。
+    ''' </summary>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Function TcpSend(ByVal SendCommand As String) As String
+
+        Dim UEncode As System.Text.Encoding
+        UEncode = System.Text.Encoding.UTF8
+
+        '前のレスポンスが残っているか？
+        ReadStr = ""
+        If TcpSock.Available > 0 Then
+            Dim ReceiveBuffer As Byte()
+            '受信文字数による配列の確保
+            ReceiveBuffer = New Byte(TcpSock.Available - 1) {}
+            '読取
+            NetStm.Read(ReceiveBuffer, 0, ReceiveBuffer.GetLength(0))
+            '受信したByteをUTF-8で文字列に置き換え
+            ReadStr = UEncode.GetString(ReceiveBuffer)
+            MakerCom.PlcErrCheck("E10", Maker, ReadStr)
+        End If
+
+        Dim SendBuffer As Byte()
+
+        '引数のコマンド文字列をUTF-8ｺｰﾄﾞでByteに置き換え
+        SendBuffer = UEncode.GetBytes(SendCommand & SendTerminate)
+        Try
+            'Socketの接続状態確認
+            If TcpSock.Client.Poll(-1, Net.Sockets.SelectMode.SelectWrite) Then
+                '送信
+                NetStm.Write(SendBuffer, 0, SendBuffer.GetLength(0))
+            Else
+                '切断
+                Return "E9"
+            End If
+        Catch ex As IO.IOException
+            'Writeタイムアウト
+            Return "E8"
+        End Try
+
+        Return TcpReceive()
+
+    End Function*/
 
         #region "プロパティ"
         public IPAddress IPAddr
